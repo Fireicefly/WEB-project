@@ -6,16 +6,17 @@ NODE_ENV=development
 MONGO_DB_URI=[Link to your database]
 ```
 
-2. Build : 
+2. Run server at root of the project : 
 
 ```
-npm run build
+npm run server
 ```
 
-3. Start app :
+3. Run front-end, on /frontend directory :
 
 ```
-npm start
+npm run dev
 ```
 
-4. On your browser  : ```http://localhost:9000```
+4. On your browser access the client : ```http://localhost:3000```
+The server is running on the port 9000
