@@ -1,9 +1,11 @@
 import React from 'react'
+import AddFriend from './addfriend/AddFriend.jsx'
 
 const TitleApp = () => {
   return (
-    <div>
-          <h1 className='text-lime-700 font-montserrat font-light text-center mb-3 text-2xl'>Talk</h1>
+    <div className='w-full relative mb-3'>
+          <h1 className='text-lime-600 font-montserrat font-light text-center text-2xl'>Talk</h1>
+          <AddFriend />
     </div>
   )
 }

@@ -25,7 +25,7 @@ const SignUp = () => {
     return (
     <div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
         <div className='w-full p-6 rounded-lg shadow-md bg-zinc-900'>
-            <h1 className='text-3xl font-semibold text-center text-slate-200 mb-4'>Sign Up <span className='text-lime-700 font-montserrat font-light'>Talk</span></h1>
+            <h1 className='text-3xl font-semibold text-center text-slate-200 mb-4'>Sign Up <span className='text-lime-600 font-montserrat font-light'>Talk</span></h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label className='label input input-bordered bg-neutral-800 gap-2 mb-4'>
