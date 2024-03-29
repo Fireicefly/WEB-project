@@ -4,6 +4,7 @@ import MessageInput from './MessageInput.jsx';
 import { TiMessages } from "react-icons/ti";
 import useConversation from '../../zustand/useConversation.js';
 import { useAuthContext } from '../../context/AuthContext.jsx';
+import TicTacToeButton from './TicTacToeButton.jsx';
 
 const MessageContainer = () => {
   const {selectedConversation, setSelectedConversation} = useConversation();
@@ -21,7 +22,9 @@ const MessageContainer = () => {
               <span className='text-neutral-100 font-bold'>{selectedConversation.fullName}</span>
           </div>
           <Messages />
+          <TicTacToeButton />
           <MessageInput />
+
         </>
         )}
     </div>
