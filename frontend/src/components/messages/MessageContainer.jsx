@@ -4,7 +4,8 @@ import MessageInput from './MessageInput.jsx';
 import { TiMessages } from "react-icons/ti";
 import useConversation from '../../zustand/useConversation.js';
 import { useAuthContext } from '../../context/AuthContext.jsx';
-import TicTacToeButton from './TicTacToeButton.jsx';
+import TicTacToeButton from '../tictactoe/TicTacToeButton.jsx';
+
 
 const MessageContainer = () => {
   const {selectedConversation, setSelectedConversation} = useConversation();
@@ -24,7 +25,7 @@ const MessageContainer = () => {
           <Messages />
           <TicTacToeButton />
           <MessageInput />
-
+          
         </>
         )}
     </div>
