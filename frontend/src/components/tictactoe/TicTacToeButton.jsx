@@ -1,6 +1,7 @@
 import React from 'react'
 import { GiTicTacToe } from "react-icons/gi";
 import useTicTacToe from '../../hooks/useTicTacToe.js';
+import { Link } from 'react-router-dom'
 
 const TicTacToeButton = () => {
   const {loading, tictactoe} = useTicTacToe();
@@ -12,28 +13,39 @@ const TicTacToeButton = () => {
           ) : (
           <span className='loading loading-spinner'></span>
           )}
-      </div>
+      </div>   
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Hello!</h3>
           <p className="py-4">Waiting for MOMO to play TicTacToe game ;{')'}</p>
           <p className="py">Press ESC to cancel </p>
           <span className="py-10 loading loading-bars loading-lg" ></span>
+          
           <div className="modal-action">
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              
+                <Link 
+                to={"/tictactoe"} 
+                className='text-sm hover:underline hover:text-blue-600 mt-2 inline-block'
+                href='#'
+              >
+                tictactoe
+
+              </Link>              
               <button className="btn">Close</button>
             </form>
           </div>
         </div>
       </dialog>
-          </form>
+    </form>
+        
+         
+    
+     
   )
 }
 
 
-<button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}>open modal</button>
+//<button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}>open modal</button>
 
 
 export default TicTacToeButton
