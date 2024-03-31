@@ -32,9 +32,13 @@ const userSchema = new mongoose.Schema({
     profilePicture: {
         type: String,
         default: ""
+    },
+
+    description: {
+        type: String,
+        default: ""
     }
 }, {timestamps: true});
 
 const User = mongoose.model("User", userSchema);
-
 export default User;

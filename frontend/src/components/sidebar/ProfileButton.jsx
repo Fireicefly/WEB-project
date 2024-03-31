@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+import { useAuthContext } from '../../context/AuthContext.jsx';
 
-const ProfileButton = (req) => {
-  const User = JSON.parse(localStorage.getItem("chat-user"));
+
+const ProfileButton = () => {
+  const {authUser} = useAuthContext();
 
   return (
     <div className="avatar p-2">
       <div className="w-12 rounded-full">
-          <img src={User.profilePicture} onClick={() => {<></>}} />
+          <img src={authUser.profilePicture} onClick={()=>document.getElementById('MyProfileModal').showModal()}/>
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ const Conversation = ({conversation, emoji, lastIdx}) => {
     onClick={() => setSelectedConversation(conversation)}>
         <div className={`avatar ${isOnline ? 'online' : ''}`}>
             <div className='w-12 rounded-full'>
-                <img src={conversation.profilePicture} alt="user avatar" />
+                <img src={conversation.profilePicture} alt="user avatar" onClick={()=>document.getElementById('MyProfileModal').showModal()} />
 
             </div>
         </div>
