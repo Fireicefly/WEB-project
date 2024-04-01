@@ -20,6 +20,9 @@ const MessageInput = () => {
 			value={message}
 			onChange={(e) => setMessage(e.target.value)}
 			/>
+            <button type='button' className='absolute inset-y-0 right-10 flex items-center pe-3'> 
+		{loading ? <div className='loading loading-spinner'></div> : <AiOutlineGif className='text-xl' />}
+            </button>
             <button type='submit' className='absolute inset-y-0 end-0 flex items-center pe-3'>
                 {loading ? <div className='loading loading-spinner'></div> : <BsSend className='text-xl' />}
             </button>
