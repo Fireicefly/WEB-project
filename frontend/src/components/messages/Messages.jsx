@@ -3,10 +3,12 @@ import Message from './Message.jsx';
 import useGetMessages from '../../hooks/useGetMessages.js';
 import MessageSkeleton from '../skeletons/MessageSkeleton.jsx';
 import useListenMessages from '../../hooks/useListenMessages.js';
+import useTictactoeInvite from '../../hooks/useTicTacToe.js';
 
 const Messages = () => {
   const {messages, loading} = useGetMessages();
   useListenMessages();
+  useTictactoeInvite();
   const lastMessageRef = useRef();
   
   useEffect(() => {

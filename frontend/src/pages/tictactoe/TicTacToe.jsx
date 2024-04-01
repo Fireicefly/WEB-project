@@ -62,7 +62,7 @@ export default function Board() {
         <Square value={squares[8]} onSquareClick={() => handleClick(8)}/>
       </div>
       <div className="status">{status}</div>
-      <Link to={"/signup"} href='#'>
+      <Link to={"/"} href='#'>
                     Close  game
         </Link>
       </h1>

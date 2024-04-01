@@ -30,4 +30,16 @@ io.on('connection', (socket) => {
         io.emit('getOnlineUsers', Object.keys(userSocketMap));
     });
 });
+
+io.on('newTictactoeInvite', (socket) => {
+    console.log('Invite', socket.id);
+    const userId = socket.handshake.query.userId;
+    //if (userId) userSocketMap[userId] = socket.id;
+
+    //io.to(receiverSocketId).emit("newTictactoeInvite", newTictactoeInvite);
+    
+});
+
+
+
 export {app, io, server};

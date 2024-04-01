@@ -2,25 +2,28 @@ import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import TicTacToeButton from '../components/tictactoe/TicTacToeButton.jsx';
-import useTicTacToeAlert from '../components/tictactoe/TicTacToeAlert.jsx';
+import { useEffect } from "react";
+import {useSocketContext} from "../context/SocketContext.jsx";
+import useConversation from "../zustand/useConversation.js";
+import notificationSound from '../assets/sounds/bubble-sound.wav';
 
-const useTicTacToe =  () => {
-    const [loading, setLoading] = useState(false);
-    
-    //const {setAuthUser} = useAuthContext();
-    
-    const tictactoe = async () => {
-        setLoading(true);
-        try {
-            useTicTacToeAlert()
-            console.log("tictactoe")
-        } catch (error) {
-            toast.error(error.message || 'An error occurred');
-        } finally {
-            setLoading(false);
-        }
-    };
-    return { loading, tictactoe }
+const useTictactoeInvite = () => {
+    const {socket} = useSocketContext();
+    const {messages, setMessages} = useConversation();
+
+    useEffect(() => {
+        socket?.on('newTictactoeInvite', () => {
+
+            const sound = new Audio(notificationSound);
+            sound.play();
+            console.log(socket._id)
+            setMessages([...messages, "invite"]);
+        });
+
+        return () => socket?.off('newTictactoeInvite');
+    }, [socket, messages, setMessages]);
 }
 
-export default useTicTacToe
+export default useTictactoeInvite
+
+
