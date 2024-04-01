@@ -12,12 +12,6 @@ const userSchema = new mongoose.Schema({
         trim: true,
         unique: true
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
-    },
     password: {
         type: String,
         required: true,
@@ -28,18 +22,32 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ["male", "female"]
     },
-
+    friends: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "User",
+        default: []
+    },
+    friendRequests: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "User",
+        default: []
+    },
+    blockedUsers: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "User",
+        default: []
+    },
     profilePicture: {
         type: String,
         default: ""
     },
-    
     description: {
         type: String,
         default: ""
     }
 }, {timestamps: true});
 
+// friendsRequestSent, friendsRequestReceived, blocked, banned
 const User = mongoose.model("User", userSchema);
 
 export default User;

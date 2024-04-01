@@ -13,7 +13,7 @@ export const login = async (req, res) => {
             return res.status(400).json({ error: "Invalid username or password" });
         }
         generateTokenAndSetCookie(res, user._id);
-        res.status(200).json({ _id: user._id, username: user.username, fullName: user.fullName, email: user.email, profilePicture: user.profilePicture });
+        res.status(200).json({ _id: user._id, username: user.username, fullName: user.fullName, profilePicture: user.profilePicture });
 
     } catch (error) {
 
@@ -26,20 +26,14 @@ export const login = async (req, res) => {
 
 export const signup = async (req, res) => {
     try {
-        const { fullName, username, email, password, confirmPassword, gender } = req.body;
+        const { fullName, username, password, confirmPassword, gender } = req.body;
         if (password !== confirmPassword) {
             return res.status(400).json({ error: "Passwords do not match" });
         }
-        const user = await User.findOne({ $or: [{ username }, { email }] });
-        if (user) {
-            if (user.username === username) {
-                // Username is already in use
-                return res.status(400).json({ error: "Username is already in use" });
-            }
-            if (user.email === email) {
-                // Email is already in use
-                return res.status(400).json({ error: "Email is already in use" });
-            }
+        const user = await User.findOne({ username });
+        if (user?.username === username) {
+            // Username is already in use
+            return res.status(400).json({ error: "Username is already in use" });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -51,7 +45,6 @@ export const signup = async (req, res) => {
         const newUser = new User({
             fullName: fullName,
             username: username,
-            email: email,
             password: hashedPassword,
             gender: gender,
             profilePicture: gender === "male" ? boyProfilePic : girlProfilePic
@@ -61,7 +54,7 @@ export const signup = async (req, res) => {
         if (newUser) {
             await newUser.save();
             generateTokenAndSetCookie(res, newUser._id);
-            res.status(201).json({ _id: newUser._id, fullName: newUser.fullName, username: newUser.username, email: newUser.email, profilePicture: newUser.profilePicture});
+            res.status(201).json({ _id: newUser._id, fullName: newUser.fullName, username: newUser.username, profilePicture: newUser.profilePicture});
         } else {
             res.status(400).json({ error: "Invalid user data" });
         }

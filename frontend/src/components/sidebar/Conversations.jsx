@@ -7,7 +7,7 @@ const Conversations = () => {
   const {loading, conversations} = useGetConversations();
 
   return (
-    <div className='py-2 flex flex-col overflow-auto scrollbar'>
+    <div className='py-2 flex flex-col overflow-auto mx-2 scrollbar'>
         {conversations.map((conversation,idx) => (
             <Conversation
               key={conversation._id}
