@@ -1,12 +1,14 @@
 import {useEffect, useState} from 'react'
 import toast from 'react-hot-toast'
 import useFriendRequests from '../zustand/useFriendRequests.js'
+import useConversationsList from '../zustand/useConversationsList.js'
 
 // A FINIR
 
 const useAcceptFriendRequest = () => {
     const [loading, setLoading] = useState(false);
     const {friendRequests, setFriendRequests} = useFriendRequests();
+    const {conversations, setConversations} = useConversationsList();
 
     const acceptFriend = async (friendId) => {
         setLoading(true);
@@ -24,6 +26,8 @@ const useAcceptFriendRequest = () => {
             }
             const updatedFriendRequests = friendRequests.filter(request => request._id !== friendId);
             setFriendRequests(updatedFriendRequests);
+            setConversations([...conversations, data]);
+
         } catch (err) {
             toast.error(err.message);
         } finally {

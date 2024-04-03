@@ -41,6 +41,23 @@ export default useSignup;
 
 
 function handleInputErrors({fullName, username, password, confirmPassword, gender}) {
+    
+    
+
+
+    
+    const fullNameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+    const usernameRegex = /^[A-Za-z0-9À-ÖØ-öø-ÿ]+$/;
+
+    if (!fullNameRegex.test(fullName)) {
+        toast.error('Please enter a valid full name (only letters)');
+        return false;
+    }
+    if (!usernameRegex.test(username)) {
+        toast.error('Please enter a valid username (only letters and numbers)');
+        return false;
+    }
+    
     if (!fullName || !username || !password || !confirmPassword || !gender) {
         toast.error('Please fill in all fields');
         return false;

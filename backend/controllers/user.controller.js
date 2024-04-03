@@ -1,5 +1,7 @@
 import { query } from "express";
 import User from "../models/user.model.js";
+import { getReceiverSocketId } from "../socket/socket.js";
+import { io } from "../socket/socket.js";
 
 export const getUsersForSidebar = async (req, res) => {
     try {
@@ -50,14 +52,21 @@ export const addFriend = async (req, res) => {
             return res.status(400).json({ error: "Friend request not found" });
         }
  
-        const friend = await User.findById(friendId).select("fullName username");
+        const friend = await User.findById(friendId).select("fullName username profilePicture");
         if (!friend) {
             return res.status(400).json({ error: "User not found" });
         }
         const user1 = await User.findByIdAndUpdate(userId, { $push: { friends: friendId } }, { new: true });
         const user2 = await User.findByIdAndUpdate(friendId, { $push: { friends: userId } }, { new: true });
         const user1requestRemoved = await User.findByIdAndUpdate(userId, { $pull: { friendRequests: friendId } }, { new: true });
-        return res.status(200).json({ friend });
+
+        const receiverSocketId = getReceiverSocketId(friendId);
+
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("newFriend", req.user);
+        }
+
+        return res.status(200).json({ _id: friend._id, fullName: friend.fullName, username: friend.username, profilePicture: friend.profilePicture});
     }
     catch (error) {
         console.log("Error in addFriend : ", error);

@@ -27,6 +27,11 @@ export const login = async (req, res) => {
 export const signup = async (req, res) => {
     try {
         const { fullName, username, password, confirmPassword, gender } = req.body;
+
+        if (!fullName || !username || !password || !confirmPassword || !gender) {
+            return res.status(400).json({ error: "Please fill in all fields" });
+        }
+
         if (password !== confirmPassword) {
             return res.status(400).json({ error: "Passwords do not match" });
         }
@@ -34,6 +39,16 @@ export const signup = async (req, res) => {
         if (user?.username === username) {
             // Username is already in use
             return res.status(400).json({ error: "Username is already in use" });
+        }
+        const fullNameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+        const usernameRegex = /^[A-Za-z0-9À-ÖØ-öø-ÿ]+$/;
+
+        if (!fullNameRegex.test(fullName)) {
+            return res.status(400).json({ error: "Please enter a valid full name (only letters)" });
+        }
+
+        if (!usernameRegex.test(username)) {
+            return res.status(400).json({ error: "Please enter a valid username (only letters and numbers)" });
         }
 
         const salt = await bcrypt.genSalt(10);
