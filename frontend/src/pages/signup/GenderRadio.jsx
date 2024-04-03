@@ -5,7 +5,7 @@ const GenderRadio = ({onRadioChange, selectedGender}) => {
     <div className='flex justify-center'>
         <div className='form-control mr-4'>
             <label className='cursor-pointer label gap-3'>
-                <span className='label-text'>Male</span>
+                <span className='label-text text-slate-200'>Male</span>
                 <input type="radio" name="gender" className='radio' 
                 checked={selectedGender === "male"} 
                 onChange={() => { onRadioChange("male") }}
@@ -14,7 +14,7 @@ const GenderRadio = ({onRadioChange, selectedGender}) => {
         </div>
         <div className='form-control'>
             <label className='cursor-pointer label gap-3'>
-                <span className='label-text'>Female</span>
+                <span className='label-text text-slate-200'>Female</span>
                 <input type="radio" name="gender" className='radio' 
                 checked={selectedGender === "female"}
                 onChange={() => { onRadioChange("female") }}

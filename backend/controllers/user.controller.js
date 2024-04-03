@@ -5,8 +5,8 @@ export const getUsersForSidebar = async (req, res) => {
     try {
 
         const loggedUserId = req.user._id;
-        const filteredUsers = await User.find({ _id: { $ne: loggedUserId } }).select("-password");
-
+        
+        const filteredUsers = await User.find({ _id: { $in: req.user.friends } }).select("-password");
         res.status(200).json(filteredUsers);
 
     } catch (error) {
@@ -18,10 +18,9 @@ export const getUsersForSidebar = async (req, res) => {
 export const getUsersForSearch = async (req, res) => {
     try {
 
-        const query = req.params.query || "";
-        console.log("query : ", query);
+        const search = req.params.search || "";
         const loggedUserId = req.user._id;
-        const filteredUsers = await User.find({ _id: { $ne: loggedUserId }, _id: { $nin: req.user.friends }, username: { $regex: `^${query}`, $options: "i" } }).select("-password");
+        const filteredUsers = await User.find({$and : [{ _id: { $ne: loggedUserId }}, {_id: { $nin: req.user.friends }}], username: { $regex: `^${search}`, $options: "i" } }).select("-password");
 
         res.status(200).json(filteredUsers);
 
@@ -136,6 +135,27 @@ export const deleteFriend = async (req, res) => {
         return res.status(200).json({ friendId });
     } catch (error) {
         console.log("Error in deleteFriend : ", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+export const refuseFriendRequest = async (req, res) => {
+    try {
+        const friendId = req.params.friendId;
+        const userId = req.user._id;
+
+        if (friendId == userId) {
+            return res.status(400).json({ error: "User cannot refuse himself" });
+        }
+
+        if (!req.user.friendRequests.includes(friendId)) {
+            return res.status(400).json({ error: "User has not received friend request" });
+        }
+
+        const user = await User.findByIdAndUpdate(userId, { $pull: { friendRequests: friendId } }, { new: true });
+        return res.status(200).json({ friendId });
+    } catch (error) {
+        console.log("Error in refuseFriendRequest : ", error);
         res.status(500).json({ error: "Internal server error" });
     }
 }

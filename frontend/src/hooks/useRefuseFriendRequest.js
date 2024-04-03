@@ -2,16 +2,14 @@ import {useEffect, useState} from 'react'
 import toast from 'react-hot-toast'
 import useFriendRequests from '../zustand/useFriendRequests.js'
 
-// A FINIR
-
-const useAcceptFriendRequest = () => {
+const useRefuseFriendRequest = () => {
     const [loading, setLoading] = useState(false);
     const {friendRequests, setFriendRequests} = useFriendRequests();
 
-    const acceptFriend = async (friendId) => {
+    const refuseFriend = async (friendId) => {
         setLoading(true);
         try {
-            const res = await fetch(`/api/users/addfriend/${friendId}`,
+            const res = await fetch(`/api/users/refuserequest/${friendId}`,
                 {
                     method: 'POST',
                     headers: {
@@ -31,6 +29,6 @@ const useAcceptFriendRequest = () => {
         }
     };
 
-    return {loading, acceptFriend};
+    return {loading, refuseFriend};
 }
-export default useAcceptFriendRequest;
+export default useRefuseFriendRequest;
